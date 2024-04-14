@@ -75,3 +75,44 @@ void holonomic_odom_test(){
   chassis.holonomic_drive_to_point(0, 18, 270);
   chassis.holonomic_drive_to_point(0, 0, 0);
 }
+
+void far_side() {
+  motor Intake1 = motor(PORT17, ratio18_1, true); 
+  motor Intake2 = motor(PORT4, ratio18_1, false); 
+  motor_group Intake (Intake1, Intake2);
+  digital_out Hang = digital_out(Brain.ThreeWirePort.H);
+  Hang.set(false);
+  digital_out Descore = digital_out(Brain.ThreeWirePort.E);
+  Descore.set(false);
+
+  Descore.set(true);
+  wait(250, msec);
+  Descore.set(false);
+
+  Intake.spin(fwd, 100, percent);
+  chassis.drive_to_point(60, -12);
+  wait(250, msec);
+  Intake.stop(hold);
+
+  chassis.drive_to_point(0, 0);
+
+  chassis.turn_to_point(24, 24);
+  Intake.spin(rev, 100, percent);
+  wait(250, msec);
+  Intake.stop(coast);
+
+  chassis.turn_to_point(0, -36);
+  Intake.spin(fwd, 100, percent);
+  chassis.drive_to_point(0, -36);
+  wait(250, msec);
+  Intake.stop(hold);
+
+  chassis.drive_to_point(0, 12);
+
+  chassis.turn_to_point(12, 24);
+  Descore.set
+  chassis.move_to_point(12, 24);
+  
+  
+  
+}
