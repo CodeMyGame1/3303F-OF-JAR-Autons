@@ -90,6 +90,7 @@ void far_side() {
   Descore.set(false);
 
   Intake.spin(fwd, 100, percent);
+  // will we get DQed for crossing central barrier?
   chassis.drive_to_point(60, -12);
   wait(250, msec);
   Intake.stop(hold);
@@ -105,14 +106,43 @@ void far_side() {
   Intake.spin(fwd, 100, percent);
   chassis.drive_to_point(0, -36);
   wait(250, msec);
-  Intake.stop(hold);
+  Intake.stop(coast);
 
   chassis.drive_to_point(0, 12);
 
   chassis.turn_to_point(12, 24);
-  Descore.set
-  chassis.move_to_point(12, 24);
-  
-  
-  
+  Descore.set(true);
+  chassis.drive_to_point(12, 24);
+
+  // what if wing rips off oopsies
+  chassis.turn_to_point(48, 24);
+  Descore.set(false);
+
+  // tune error, settle time, and timeout values (last three values) for ALL `drive_to_point` calls with more than 2 params
+  chassis.drive_to_point(48, 24, 12, 0, 4, 400, 1000);
+  chassis.drive_to_point(24, 24);
+  chassis.turn_to_angle(0);
+  // will this drive with BACK of bot or just find closest?
+  chassis.drive_to_point(48, 24, 12, 0, 4, 400, 1000);
+
+  chassis.drive_to_point(24, 24);
+  chassis.turn_to_point(36, -36);
+  Intake.spin(fwd, 100, percent);
+  // will this go OVER barrier?
+  chassis.drive_to_point(36, -36, 12, 0, 4, 400, 1000);
+  Intake.stop(coast);
+
+  chassis.turn_to_point(48, 0);
+  chassis.drive_to_point(48, 0);
+  chassis.turn_to_point(48, 24);
+  chassis.drive_to_point(48, 24, 12, 0, 4, 400, 1000);
+
+  chassis.drive_to_point(48, 0);
+  chassis.turn_to_point(60, -36);
+  Intake.spin(fwd, 100, percent);
+  // will this DQ us for crossing central barrier?
+  chassis.drive_to_point(60, -36, 12, 0, 4, 400, 1000);
+  Intake.stop(coast);
+  chassis.turn_to_point(60, 24);
+  chassis.drive_to_point(60, 24, 12, 0, 4, 400, 1000);
 }
