@@ -146,3 +146,51 @@ void far_side() {
   chassis.turn_to_point(60, 24);
   chassis.drive_to_point(60, 24, 12, 0, 4, 400, 1000);
 }
+
+void near_side() {
+  motor Intake1 = motor(PORT17, ratio18_1, true); 
+  motor Intake2 = motor(PORT4, ratio18_1, false); 
+  motor_group Intake (Intake1, Intake2);
+  digital_out Hang = digital_out(Brain.ThreeWirePort.H);
+  Hang.set(false);
+  digital_out Descore = digital_out(Brain.ThreeWirePort.E);
+  Descore.set(false);
+
+  Descore.set(true);
+  wait(250, msec);
+  Descore.set(false);
+
+  chassis.turn_to_point(60, 12);
+  Intake.spin(fwd, 100, percent);
+  // will this DQ us for crossing central barrier? try to make the obtaining of triball as fast as possible while still being accurate
+  chassis.drive_to_point(60, 12);
+  wait(250, msec);
+  Intake.stop(coast);
+  chassis.drive_to_point(0, 0);
+
+  chassis.turn_to_point(0, 36);
+  Intake.spin(rev, 100, percent);
+  wait(250, msec);
+  Intake.stop(hold);
+
+  // with front or back?
+  chassis.turn_to_point(24, -24);
+  chassis.drive_to_point(24, -24);
+
+  chassis.turn_to_point(48, -24);
+  chassis.drive_to_point(48, -24, 12, 0, 4, 400, 1000);
+  chassis.drive_to_point(24, -24);
+
+  chassis.turn_to_point(0, 0);
+  Descore.set(true);
+  chassis.drive_to_point(0, 0);
+  chassis.turn_to_point(0, 36);
+  Descore.set(false);
+
+  // will we get DQed for crossing barrier?
+  chassis.drive_to_point(0, 36);
+  chassis.drive_to_point(0, 24);
+  // so that zipties on intake can touch the elevation bar
+  chassis.turn_to_angle(-90);
+  chassis.drive_to_point(0, 36);
+}
